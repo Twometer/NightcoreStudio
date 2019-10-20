@@ -1,4 +1,5 @@
-﻿using CSCore;
+﻿using AutoNightcore.Effects;
+using CSCore;
 using CSCore.Codecs;
 using CSCore.Codecs.WAV;
 using CSCore.MediaFoundation;
@@ -16,9 +17,16 @@ namespace AutoNightcore.Generator
     {
         private GeneratorOptions options;
 
+        private List<IEffect> effects;
+
         public NightcoreGenerator(GeneratorOptions options)
         {
             this.options = options;
+        }
+
+        public void AddEffect(IEffect effect)
+        {
+            effects.Add(effect);
         }
 
         public bool Generate()
@@ -26,11 +34,10 @@ namespace AutoNightcore.Generator
             var audioSource = CodecFactory.Instance.GetCodec(options.AudioFile.FullName)
                 .ToSampleSource()
                 .AppendSource(s => new SoundTouchSource(s, 50), out var touchSource);
-
             touchSource.SetRate(1.20f);
 
-            var waveSource = audioSource.ToWaveSource();
 
+            var waveSource = audioSource.ToWaveSource();
 
 
             /*     pitchSource.SetPitch(1.0f + this.options.Factor);
@@ -47,8 +54,8 @@ namespace AutoNightcore.Generator
                          SendWithDelay(os);
                  }*/
 
+
             var so = new CSCore.SoundOut.WasapiOut();
-            waveSource.Position = 0;
             so.Initialize(waveSource);
             so.Play();
             so.Stopped += So_Stopped;

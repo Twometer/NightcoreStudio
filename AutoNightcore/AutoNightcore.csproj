@@ -124,8 +124,15 @@
   <ItemGroup>
     <Compile Include="Audio\SoundTouch.cs" />
     <Compile Include="Audio\SoundTouchSource.cs" />
+    <Compile Include="Effects\DetailsEffect.cs" />
+    <Compile Include="Effects\EffectStage.cs" />
+    <Compile Include="Effects\FadeEffect.cs" />
+    <Compile Include="Effects\IEffect.cs" />
+    <Compile Include="Effects\ParticleEffects.cs" />
+    <Compile Include="Effects\ShakeEffect.cs" />
     <Compile Include="Generator\GeneratorOptions.cs" />
     <Compile Include="Generator\NightcoreGenerator.cs" />
+    <Compile Include="Generator\NightcoreVideo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
