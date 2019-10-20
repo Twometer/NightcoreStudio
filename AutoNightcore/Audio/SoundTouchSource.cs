@@ -48,6 +48,11 @@ namespace SoundTouchPitchAndTempo
             _soundTouch.SetPitchSemiTones(pitch);
         }
 
+        public void SetRate(float rate)
+        {
+            _soundTouch.SetPlaybackRate(rate);
+        }
+
         public void SetTempo(float tempo)
         {
             if (tempo > 52.0f || tempo < -52.0f)

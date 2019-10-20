@@ -25,46 +25,54 @@ namespace AutoNightcore.Generator
         {
             var audioSource = CodecFactory.Instance.GetCodec(options.AudioFile.FullName)
                 .ToSampleSource()
-                .AppendSource(x => new SoundTouchSource(x, 50), out SoundTouchSource pitchSource)
-                .AppendSource(x => new SoundTouchSource(x, 50), out SoundTouchSource tempoSource);
+                .AppendSource(s => new SoundTouchSource(s, 50), out var touchSource);
 
-            var waveSource =                 audioSource.ToWaveSource();
+            touchSource.SetRate(1.20f);
 
-            pitchSource.SetPitch(1.0f + options.Factor);
-            tempoSource.SetTempo(1.0f + options.Factor);
+            var waveSource = audioSource.ToWaveSource();
 
-            Console.WriteLine("Analyzing...");
-            var detector = new OnsetDetector(DetectorOptions.Default, this);
-            var onsets = detector.Detect(audioSource);
-            Console.WriteLine("Detected " + onsets.Count + " onsets");
-            foreach (var os in onsets)
-            {
-                Console.WriteLine(os.OnsetTime);
-            }
 
-            waveSource.Position = 0;
+
+            /*     pitchSource.SetPitch(1.0f + this.options.Factor);
+                 tempoSource.SetTempo(1.0f + this.options.Factor * 5);
+
+                 Console.WriteLine("Analyzing...");
+                 var doptions = DetectorOptions.Default;
+                 var detector = new OnsetDetector(doptions, this);
+                 var onsets = detector.Detect(audioSource);
+                 Console.WriteLine("Detected " + onsets.Count + " onsets");
+                 foreach (var os in onsets)
+                 {
+                     if (os.OnsetAmplitude > 15)
+                         SendWithDelay(os);
+                 }*/
 
             var so = new CSCore.SoundOut.WasapiOut();
+            waveSource.Position = 0;
             so.Initialize(waveSource);
-            
             so.Play();
-
             so.Stopped += So_Stopped;
 
-           
 
+            /*
+            var lastpos = 0f;
             while (true)
             {
                 var pos = waveSource.GetPosition().TotalSeconds;
                 foreach (var detect in onsets)
                 {
-                    if(Math.Abs(Math.Round(detect.OnsetTime,1) - Math.Round(pos, 1)) < 0.5f)
+                    if (Math.Abs(Math.Round(detect.OnsetTime, 1) - Math.Round(pos, 1)) < 0.1f)
                     {
+                        if (detect.OnsetTime == lastpos)
+                        {
+                            continue;
+                        }
                         Console.WriteLine(detect.OnsetAmplitude);
+                        lastpos = detect.OnsetTime;
                     }
                 }
-                System.Threading.Thread.Sleep(500);
-            }
+                System.Threading.Thread.Sleep(1);
+            }*/
 
 
 
@@ -81,11 +89,17 @@ namespace AutoNightcore.Generator
             return true;
         }
 
+        private async void SendWithDelay(Onset onset)
+        {
+            await Task.Delay((int)(onset.OnsetTime * 1000f));
+            Console.WriteLine("-> " + onset.OnsetAmplitude);
+        }
+
         private void So_Stopped(object sender, CSCore.SoundOut.PlaybackStoppedEventArgs e)
         {
-            
+
             Console.WriteLine("playback stopped ");
-        
+
         }
 
         public void Report(string value)

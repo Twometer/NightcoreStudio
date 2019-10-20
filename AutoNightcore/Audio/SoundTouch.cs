@@ -11,6 +11,7 @@ namespace SoundTouchPitchAndTempo
         void PutSamples(float[] samples, int numberOfSamples);
         int ReceiveSamples(float[] outBuffer, int maxSamples);
         void SetChannels(int numberOfChannels);
+        void SetPlaybackRate(float rate);
         void SetPitchSemiTones(float newPitch);
         void SetSampleRate(int sampleRate);
         void SetTempoChange(float newTempo);
@@ -63,6 +64,11 @@ namespace SoundTouchPitchAndTempo
             Clear(_soundTouchHandle);
         }
 
+        public void SetPlaybackRate(float newRate)
+        {
+            SetRate(_soundTouchHandle, newRate);
+        }
+
         public void SetTempoChange(float newTempo)
         {
             SetTempoChange(_soundTouchHandle, newTempo);
@@ -103,6 +109,9 @@ namespace SoundTouchPitchAndTempo
 
         [DllImport(SoundTouchDLL, CallingConvention = CallingConvention.Cdecl, EntryPoint = "soundtouch_setTempoChange")]
         private static extern void SetTempoChange(IntPtr handle, float newTempo);
+
+        [DllImport(SoundTouchDLL, CallingConvention = CallingConvention.Cdecl, EntryPoint = "soundtouch_setRate")]
+        private static extern void SetRate(IntPtr handle, float newRate);
 
         [DllImport(SoundTouchDLL, CallingConvention = CallingConvention.Cdecl, EntryPoint = "soundtouch_setPitch")]
         private static extern void SetPitch(IntPtr handle, float newPitch);
