@@ -35,6 +35,9 @@ namespace AutoNightcore
         [Option(Description = "Frames per second", ShortName = "r")]
         public int FPS { get; } = 30;
 
+        [Option(Description = "Speed up factor (percent)", ShortName = "s")]
+        public int Factor { get; } = 25;
+
         private void OnExecute()
         {
             if (!File.Exists(AudioFile))
@@ -69,7 +72,7 @@ namespace AutoNightcore
             }
 
             Console.WriteLine("Generating Nightcore video...");
-            var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS);
+            var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, Factor * 0.01f);
             var generator = new NightcoreGenerator(options);
 
             if (generator.Generate())

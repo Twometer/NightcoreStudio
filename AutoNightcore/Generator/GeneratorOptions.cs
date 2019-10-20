@@ -25,7 +25,9 @@ namespace AutoNightcore.Generator
 
         public int Fps { get; }
 
-        public GeneratorOptions(FileInfo audioFile, FileInfo wallpaperFile, FileInfo outputFile, FileInfo lyricsFile, string fontFamily, bool generateIntro, int fps)
+        public float Factor { get; }
+
+        public GeneratorOptions(FileInfo audioFile, FileInfo wallpaperFile, FileInfo outputFile, FileInfo lyricsFile, string fontFamily, bool generateIntro, int fps, float factor)
         {
             AudioFile = audioFile;
             WallpaperFile = wallpaperFile;
@@ -34,6 +36,7 @@ namespace AutoNightcore.Generator
             FontFamily = fontFamily;
             GenerateIntro = generateIntro;
             Fps = fps;
+            Factor = factor;
         }
     }
 }
