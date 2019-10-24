@@ -14,7 +14,7 @@ using System.Drawing.Imaging;
 
 namespace AutoNightcore.Renderer
 {
-    public class GLRenderer : IDisposable
+    public class GLRenderer : IDisposable, IRenderer
     {
         private GameWindow window;
 
@@ -33,12 +33,35 @@ namespace AutoNightcore.Renderer
             GL.Clear(ClearBufferMask.ColorBufferBit);
         }
 
-        public Texture LoadTexture(Image image)
+        public Texture LoadTexture(Bitmap bitmap)
+        {
+            var tex = new Texture(GL.GenTexture());
+            tex.Bind();
+
+            var data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, SDPixelFormat.Format32bppArgb);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            bitmap.UnlockBits(data);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+
+            return tex;
+        }
+
+        public void DrawImage(Texture image, int x, int y, int width, int height)
         {
 
         }
 
-        public void DrawImage(Texture image, int x, int y, int width, int height)
+
+        public void DrawString(string text, int x, int y, int size)
+        {
+
+        }
+
+        public void DrawRect(Rectangle rectangle, Color color)
         {
 
         }
@@ -62,5 +85,6 @@ namespace AutoNightcore.Renderer
                 window.Dispose();
             }
         }
+
     }
 }

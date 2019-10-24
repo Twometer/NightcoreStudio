@@ -135,12 +135,13 @@
     <Compile Include="Effects\IEffect.cs" />
     <Compile Include="Effects\ParticleEffects.cs" />
     <Compile Include="Effects\ShakeEffect.cs" />
+    <Compile Include="Generator\Frame.cs" />
     <Compile Include="Generator\GeneratorOptions.cs" />
     <Compile Include="Generator\NightcoreGenerator.cs" />
-    <Compile Include="Generator\NightcoreVideo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\GLRenderer.cs" />
+    <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Texture.cs" />
   </ItemGroup>
   <ItemGroup>

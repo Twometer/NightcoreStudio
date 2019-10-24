@@ -1,4 +1,5 @@
 ﻿using AutoNightcore.Generator;
+using AutoNightcore.Renderer;
 using CSCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace AutoNightcore.Effects
 
         void Initialize(ISampleSource soundSource);
 
-        void Apply(NightcoreVideo video, int frame, TimeSpan time);
+        void Apply(IRenderer renderer, Frame frame);
     }
 }
  

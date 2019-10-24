@@ -62,79 +62,29 @@ namespace AutoNightcore.Generator
 
             var glRenderer = new GLRenderer();
             glRenderer.Create();
-            var image = Image.FromFile(options.WallpaperFile.FullName);
+            var image = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
             var texture = glRenderer.LoadTexture(image);
 
             var totalFrames = wave.GetLength().TotalSeconds * options.Fps;
 
             for (var i = 0; i < totalFrames; i++)
             {
-                RenderFrame(i, glRenderer, wave);
+                glRenderer.Clear();
+                RenderFrame(glRenderer, new Frame(i, TimeSpan.FromSeconds(i / (double)options.Fps)));
 
                 var frame = glRenderer.Snapshot();
                 vfw.WriteVideoFrame(frame);
+                frame.Dispose();
             }
 
             glRenderer.Dispose();
             vfw.Close();
         }
 
-        private void RenderFrame(int frame, GLRenderer renderer, IWaveSource wave)
+        private void RenderFrame(IRenderer renderer, Frame frame)
         {
             renderer.DrawImage(wallpaperTexture, 0, 0, 1920, 1080);
         }
-
-
-        /*     pitchSource.SetPitch(1.0f + this.options.Factor);
-             tempoSource.SetTempo(1.0f + this.options.Factor * 5);
-
-             Console.WriteLine("Analyzing...");
-             var doptions = DetectorOptions.Default;
-             var detector = new OnsetDetector(doptions, this);
-             var onsets = detector.Detect(audioSource);
-             Console.WriteLine("Detected " + onsets.Count + " onsets");
-             foreach (var os in onsets)
-             {
-                 if (os.OnsetAmplitude > 15)
-                     SendWithDelay(os);
-
-             }
-
-                     var so = new CSCore.SoundOut.WasapiOut();
-        so.Initialize(waveSource);
-        so.Play();
-        so.Stopped += So_Stopped
-
-        var lastpos = 0f;
-        while (true)
-        {
-            var pos = waveSource.GetPosition().TotalSeconds;
-            foreach (var detect in onsets)
-            {
-                if (Math.Abs(Math.Round(detect.OnsetTime, 1) - Math.Round(pos, 1)) < 0.1f)
-                {
-                    if (detect.OnsetTime == lastpos)
-                    {
-                        continue;
-                    }
-                    Console.WriteLine(detect.OnsetAmplitude);
-                    lastpos = detect.OnsetTime;
-                }
-            }
-            System.Threading.Thread.Sleep(1);
-        }*/
-
-
-
-        /*using (var encoder = MediaFoundationEncoder.CreateMP3Encoder(audioSource.WaveFormat, "output.mp3"))
-        {
-            byte[] buffer = new byte[audioSource.WaveFormat.BytesPerSecond];
-            int read;
-            while ((read = waveSource.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                encoder.Write(buffer, 0, read);
-            }
-        }*/
 
     }
 }

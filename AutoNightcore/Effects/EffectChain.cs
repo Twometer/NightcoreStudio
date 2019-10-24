@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoNightcore.Generator;
+using AutoNightcore.Renderer;
+using CSCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +19,17 @@ namespace AutoNightcore.Effects
             effects.Add(effect);
         }
 
-        public void Apply(EffectStage stage)
+        public void Initialize(ISampleSource source)
         {
+            foreach (var eff in effects)
+                eff.Initialize(source);
+        }
 
+        public void Apply(IRenderer renderer, Frame frame, EffectStage stage)
+        {
+            foreach (var eff in effects)
+                if (eff.Stage == stage)
+                    eff.Apply(renderer, frame);
         }
 
     }

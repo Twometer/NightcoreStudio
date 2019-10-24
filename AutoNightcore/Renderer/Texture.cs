@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Graphics.OpenGL;
 
 namespace AutoNightcore.Renderer
 {
@@ -10,9 +11,15 @@ namespace AutoNightcore.Renderer
     {
         private int id;
 
-        private int width;
+        public Texture(int id)
+        {
+            this.id = id;
+        }
 
-        private int height;
+        public void Bind()
+        {
+            GL.BindTexture(TextureTarget.Texture2D, id);
+        }
 
     }
 }

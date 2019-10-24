@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoNightcore.Generator;
+using AutoNightcore.Renderer;
 using CSCore;
 
 namespace AutoNightcore.Effects
@@ -12,7 +13,7 @@ namespace AutoNightcore.Effects
     {
         public EffectStage Stage => EffectStage.PreProcess;
 
-        public void Apply(NightcoreVideo video, int frame, TimeSpan time)
+        public void Apply(IRenderer renderer, Frame frame)
         {
             throw new NotImplementedException();
         }

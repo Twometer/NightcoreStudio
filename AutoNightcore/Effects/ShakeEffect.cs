@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoNightcore.Generator;
+using AutoNightcore.Renderer;
 using CSCore;
 using OnsetDetection;
 
@@ -21,7 +22,7 @@ namespace AutoNightcore.Effects
             onsets = detector.Detect(soundSource);
         }
 
-        public void Apply(NightcoreVideo video, int frame, TimeSpan time)
+        public void Apply(IRenderer renderer, Frame frame)
         {
             throw new NotImplementedException();
         }
