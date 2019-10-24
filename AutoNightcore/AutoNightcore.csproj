@@ -129,6 +129,7 @@
     <Compile Include="Audio\SoundTouch.cs" />
     <Compile Include="Audio\SoundTouchSource.cs" />
     <Compile Include="Effects\DetailsEffect.cs" />
+    <Compile Include="Effects\EffectChain.cs" />
     <Compile Include="Effects\EffectStage.cs" />
     <Compile Include="Effects\FadeEffect.cs" />
     <Compile Include="Effects\IEffect.cs" />
@@ -139,6 +140,8 @@
     <Compile Include="Generator\NightcoreVideo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\GLRenderer.cs" />
+    <Compile Include="Renderer\Texture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
