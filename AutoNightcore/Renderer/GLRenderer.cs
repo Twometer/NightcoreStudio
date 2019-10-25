@@ -11,12 +11,15 @@ using System.Threading.Tasks;
 using SDPixelFormat = System.Drawing.Imaging.PixelFormat;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using System.Drawing.Imaging;
+using AutoNightcore.Renderer.Shaders;
 
 namespace AutoNightcore.Renderer
 {
     public class GLRenderer : IDisposable, IRenderer
     {
         private GameWindow window;
+
+        public BasicShader BasicShader { get; private set; }
 
         public void Create()
         {
@@ -26,6 +29,8 @@ namespace AutoNightcore.Renderer
             win.WindowBorder = WindowBorder.Hidden;
             win.MakeCurrent();
             window = win;
+
+            BasicShader = new BasicShader();
         }
 
         public void Clear()
@@ -52,6 +57,8 @@ namespace AutoNightcore.Renderer
 
         public void DrawImage(Texture image, int x, int y, int width, int height)
         {
+            BasicShader.Bind();
+            image.Bind();
 
         }
 
