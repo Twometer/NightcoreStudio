@@ -142,6 +142,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\GLRenderer.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
+    <Compile Include="Renderer\Loader.cs" />
+    <Compile Include="Renderer\Shaders\BasicShader.cs" />
+    <Compile Include="Renderer\Shaders\Shader.cs" />
     <Compile Include="Renderer\Texture.cs" />
   </ItemGroup>
   <ItemGroup>
