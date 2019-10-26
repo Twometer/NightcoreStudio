@@ -18,7 +18,13 @@ namespace AutoNightcore.Renderer
 
         public void Bind()
         {
+            GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, id);
+        }
+
+        public void Unbind()
+        {
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
     }

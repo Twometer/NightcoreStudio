@@ -143,7 +143,8 @@
     <Compile Include="Renderer\GLRenderer.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Loader.cs" />
-    <Compile Include="Renderer\Shaders\BasicShader.cs" />
+    <Compile Include="Renderer\Model.cs" />
+    <Compile Include="Renderer\Shaders\ImageShader.cs" />
     <Compile Include="Renderer\Shaders\Shader.cs" />
     <Compile Include="Renderer\Texture.cs" />
   </ItemGroup>
@@ -151,6 +152,14 @@
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="Resources\Shaders\image.v.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\image.f.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -14,8 +14,8 @@ namespace AutoNightcore.Renderer.Shaders
 
         protected Shader(string name)
         {
-            var vertPath = $"shaders/{name}.vs";
-            var fragPath = $"shaders/{name}.fs";
+            var vertPath = $"Resources/Shaders/{name}.v.glsl";
+            var fragPath = $"Resources/Shaders/{name}.f.glsl";
 
             var vert = File.ReadAllText(vertPath);
             var frag = File.ReadAllText(fragPath);
@@ -32,6 +32,11 @@ namespace AutoNightcore.Renderer.Shaders
         public void Bind()
         {
             GL.UseProgram(programId);
+        }
+
+        public void Unbind()
+        {
+            GL.UseProgram(0);
         }
 
         protected abstract void BindUniforms(int program);

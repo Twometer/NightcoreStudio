@@ -72,7 +72,7 @@ namespace AutoNightcore
             }
 
             Console.WriteLine("Generating Nightcore video...");
-            var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, Factor * 0.01f);
+            var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, Factor / 100.0f);
             var generator = new NightcoreGenerator(options);
 
             if (generator.Generate())

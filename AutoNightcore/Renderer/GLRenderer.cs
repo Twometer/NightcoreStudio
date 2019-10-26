@@ -19,7 +19,11 @@ namespace AutoNightcore.Renderer
     {
         private GameWindow window;
 
-        public BasicShader BasicShader { get; private set; }
+        public ImageShader BasicShader { get; private set; }
+
+        public Matrix4 ProjectionMatrix = Matrix4.Identity;
+
+        private Model rectModel;
 
         public void Create()
         {
@@ -30,12 +34,34 @@ namespace AutoNightcore.Renderer
             win.MakeCurrent();
             window = win;
 
-            BasicShader = new BasicShader();
+            BasicShader = new ImageShader();
+
+            GL.Enable(EnableCap.Texture2D);
+            GL.ClearColor(Color.Purple);
+
+            ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0f, 1920f, 1080f, 0f, 0.0f, 1.0f);
+
+            var rectVert = new float[]
+            {
+                0,1,
+                0,0,
+                1,1,
+                1,0
+            };
+
+            var rectTex = new float[]
+            {
+                0,0,
+                0,1,
+                1,0,
+                1,1
+            };
+            rectModel = new Model(rectVert, rectTex);
         }
 
         public void Clear()
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         public Texture LoadTexture(Bitmap bitmap)
@@ -60,6 +86,13 @@ namespace AutoNightcore.Renderer
             BasicShader.Bind();
             image.Bind();
 
+            BasicShader.ProjectionMatrix = ProjectionMatrix;
+            BasicShader.ModelMatrix = Matrix4.CreateScale(width, height, 1.0f) * Matrix4.CreateTranslation(x, y, 0);
+
+            rectModel.Draw();
+
+            image.Unbind();
+            BasicShader.Unbind();
         }
 
 
@@ -76,10 +109,10 @@ namespace AutoNightcore.Renderer
         public Bitmap Snapshot()
         {
             GL.Flush();
-            var bmp = new Bitmap(640, 480, SDPixelFormat.Format32bppArgb);
-            var mem = bmp.LockBits(new Rectangle(0, 0, 640, 480), ImageLockMode.WriteOnly, SDPixelFormat.Format32bppArgb);
+            var bmp = new Bitmap(1920, 1080, SDPixelFormat.Format32bppArgb);
+            var mem = bmp.LockBits(new Rectangle(0, 0, 1920, 1080), ImageLockMode.WriteOnly, SDPixelFormat.Format32bppArgb);
             GL.PixelStore(PixelStoreParameter.PackRowLength, mem.Stride / 4);
-            GL.ReadPixels(0, 0, 640, 480, PixelFormat.Bgra, PixelType.UnsignedByte, mem.Scan0);
+            GL.ReadPixels(0, 0, 1920, 1080, PixelFormat.Bgra, PixelType.UnsignedByte, mem.Scan0);
             bmp.UnlockBits(mem);
             return bmp;
         }
