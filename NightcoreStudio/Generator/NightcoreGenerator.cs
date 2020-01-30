@@ -18,6 +18,8 @@ namespace AutoNightcore.Generator
 {
     public class NightcoreGenerator
     {
+        public Action<double> ProgressHandler { get; set; }
+
         private GeneratorOptions options;
 
         private EffectChain effectChain;
@@ -27,6 +29,7 @@ namespace AutoNightcore.Generator
         public NightcoreGenerator(GeneratorOptions options)
         {
             this.options = options;
+            this.effectChain = new EffectChain();
         }
 
         public void AddEffect(IEffect effect)
@@ -41,7 +44,7 @@ namespace AutoNightcore.Generator
                 .AppendSource(s => new SoundTouchSource(s, 50), out var touchSource);
             touchSource.SetRate(1.0f + options.Factor);
 
-            GenerateVideo(touchSource);
+            GenerateVideo(audioSource);
 
             return true;
         }
@@ -57,21 +60,17 @@ namespace AutoNightcore.Generator
                 writer.AudioSampleRate = source.WaveFormat.SampleRate;
                 writer.Open();
 
-                var length = source.GetLength().TotalSeconds;
-
-                var totalFrames = length * options.Fps * (1.0f - options.Factor);
-
-                Console.WriteLine($"Stats:\n Total Seconds: {length}\n Fps: {options.Fps}");
+                var totalFrames = source.GetLength().TotalSeconds  * options.Fps * (1.0f - options.Factor);
 
                 using (var renderer = new GLRenderer())
                 {
-                    Console.WriteLine("Starting renderer...");
+                    Console.WriteLine("Initializing renderer...");
                     renderer.Create();
                     var image = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
                     wallpaperTexture = renderer.LoadTexture(image);
 
-                    Console.WriteLine("Generating video...");
 
+                    Console.WriteLine("Generating video...");
                     Thread.Sleep(1000);
 
                     float[] audioData = new float[writer.AudioSamplesPerFrame];
@@ -90,7 +89,7 @@ namespace AutoNightcore.Generator
 
                             if (f % 60 == 0)
                             {
-                                Console.WriteLine($"Progress: {f / (double)totalFrames * 100} %");
+                                ProgressHandler?.Invoke(Math.Round(f / totalFrames * 100.0, 2));
                             }
 
                             f++;
@@ -110,6 +109,9 @@ namespace AutoNightcore.Generator
         private void RenderFrame(IRenderer renderer, Frame frame)
         {
             renderer.DrawImage(wallpaperTexture, 0, 0, 1920, 1080);
+            effectChain.Apply(renderer, frame, EffectStage.PreProcess);
+            effectChain.Apply(renderer, frame, EffectStage.Main);
+            effectChain.Apply(renderer, frame, EffectStage.PostProcess);
         }
 
     }

@@ -11,7 +11,7 @@ namespace AutoNightcore.Effects
 {
     public class EffectChain
     {
-        private List<IEffect> effects;
+        private List<IEffect> effects = new List<IEffect>();
 
         public void Add(IEffect effect)
         {

@@ -86,6 +86,12 @@ namespace AutoNightcore
             var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, Factor / 100.0f);
             var generator = new NightcoreGenerator(options);
 
+            generator.ProgressHandler = progress =>
+            {
+                Console.WriteLine($"Progress: {progress}%");
+            };
+            
+
             if (generator.Generate())
             {
                 Console.WriteLine("Generated video successfully");
