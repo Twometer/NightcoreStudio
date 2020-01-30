@@ -39,12 +39,9 @@ namespace AutoNightcore.Generator
             var audioSource = CodecFactory.Instance.GetCodec(options.AudioFile.FullName)
                 .ToSampleSource()
                 .AppendSource(s => new SoundTouchSource(s, 50), out var touchSource);
-            touchSource.SetRate(1.0f + (options.Factor / 100.0f));
+            touchSource.SetRate(1.0f + options.Factor);
 
-            var waveSource = audioSource.ToWaveSource()
-                .ToSampleSource();
-
-            GenerateVideo(waveSource);
+            GenerateVideo(touchSource);
 
             return true;
         }
