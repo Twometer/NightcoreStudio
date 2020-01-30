@@ -28,7 +28,7 @@ namespace AutoNightcore.Renderer
         public void Create()
         {
             var mode = new GraphicsMode(new ColorFormat(32), 24, 0, 0, ColorFormat.Empty, 1);
-            var win = new GameWindow(1920, 1080, mode, "", GameWindowFlags.FixedWindow, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default);
+            var win = new GameWindow(1920, 1080, mode, "NightcoreStudio Renderer", GameWindowFlags.FixedWindow, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default);
             win.Visible = false;
             win.WindowBorder = WindowBorder.Hidden;
             win.MakeCurrent();
@@ -109,12 +109,13 @@ namespace AutoNightcore.Renderer
         public Bitmap Snapshot()
         {
             GL.Flush();
-            var bmp = new Bitmap(1920, 1080, SDPixelFormat.Format32bppArgb);
-            var mem = bmp.LockBits(new Rectangle(0, 0, 1920, 1080), ImageLockMode.WriteOnly, SDPixelFormat.Format32bppArgb);
+            
+            var frame = new Bitmap(1920, 1080, SDPixelFormat.Format32bppRgb);
+            var mem = frame.LockBits(new Rectangle(0, 0, 1920, 1080), ImageLockMode.WriteOnly, SDPixelFormat.Format32bppRgb);
             GL.PixelStore(PixelStoreParameter.PackRowLength, mem.Stride / 4);
             GL.ReadPixels(0, 0, 1920, 1080, PixelFormat.Bgra, PixelType.UnsignedByte, mem.Scan0);
-            bmp.UnlockBits(mem);
-            return bmp;
+            frame.UnlockBits(mem);
+            return frame;
         }
 
         public void Dispose()

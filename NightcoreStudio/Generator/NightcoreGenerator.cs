@@ -51,12 +51,18 @@ namespace AutoNightcore.Generator
 
         private void GenerateVideo(ISampleSource source)
         {
+            Console.WriteLine("Initializing video writer...");
             using (var writer = new VideoWriter(options.OutputFile.FullName))
             {
+                writer.Width = 1920;
+                writer.Height = 1080;
                 writer.Fps = options.Fps;
+                writer.AudioSampleRate = source.WaveFormat.SampleRate;
                 writer.Open();
 
                 var length = source.GetLength().TotalSeconds;
+
+                var totalFrames = length * options.Fps;
 
                 Console.WriteLine($"Stats:\n Total Seconds: {length}\n Fps: {options.Fps}");
 
@@ -64,12 +70,10 @@ namespace AutoNightcore.Generator
                 {
                     Console.WriteLine("Starting renderer...");
                     renderer.Create();
-
-                    Console.WriteLine("Loading image...");
                     var image = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
                     wallpaperTexture = renderer.LoadTexture(image);
 
-                    Console.WriteLine("Init complete");
+                    Console.WriteLine("Generating video...");
 
                     Thread.Sleep(1000);
 
@@ -86,6 +90,13 @@ namespace AutoNightcore.Generator
                             var frame = renderer.Snapshot();
                             writer.WriteVideoFrame(frame);
                             frame.Dispose();
+
+                            if (f % 60 == 0)
+                            {
+                                Console.WriteLine($"Progress: {f / (double)totalFrames * 100} %");
+                            }
+
+                            f++;
                         }
                         else
                         {
@@ -94,8 +105,6 @@ namespace AutoNightcore.Generator
                                 writer.WriteAudioFrame(audioData);
                             else break;
                         }
-
-                        f++;
                     }
                 }
             }
