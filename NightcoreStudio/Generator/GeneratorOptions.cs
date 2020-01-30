@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoNightcore.Generator
+namespace NightcoreStudio.Generator
 {
     public class GeneratorOptions
     {

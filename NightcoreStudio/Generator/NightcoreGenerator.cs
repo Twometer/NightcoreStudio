@@ -1,5 +1,5 @@
-﻿using AutoNightcore.Effects;
-using AutoNightcore.Renderer;
+﻿using NightcoreStudio.Effects;
+using NightcoreStudio.Renderer;
 using CSCore;
 using CSCore.Codecs;
 using CSCore.Codecs.WAV;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AutoNightcore.Generator
+namespace NightcoreStudio.Generator
 {
     public class NightcoreGenerator
     {
@@ -60,7 +60,7 @@ namespace AutoNightcore.Generator
                 writer.AudioSampleRate = source.WaveFormat.SampleRate;
                 writer.Open();
 
-                var totalFrames = source.GetLength().TotalSeconds  * options.Fps * (1.0f - options.Factor);
+                var totalFrames = source.GetLength().TotalSeconds * options.Fps * (1.0f - options.Factor);
 
                 using (var renderer = new GLRenderer())
                 {
@@ -69,6 +69,7 @@ namespace AutoNightcore.Generator
                     var image = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
                     wallpaperTexture = renderer.LoadTexture(image);
 
+                    effectChain.Initialize(source);
 
                     Console.WriteLine("Generating video...");
                     Thread.Sleep(1000);

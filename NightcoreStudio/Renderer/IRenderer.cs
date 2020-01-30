@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoNightcore.Renderer
+namespace NightcoreStudio.Renderer
 {
     public interface IRenderer
     {

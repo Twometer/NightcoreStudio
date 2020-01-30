@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AutoNightcore")]
+[assembly: AssemblyTitle("Nightcore Studio")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AutoNightcore")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyProduct("NightcoreStudio")]
+[assembly: AssemblyCopyright("Copyright © 2020 Twometer Applications")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

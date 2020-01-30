@@ -117,8 +117,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\SoundTouch.cs" />
-    <Compile Include="Audio\SoundTouchSource.cs" />
+    <Compile Include="Audio\OnsetDetection\AudioAnalyzer.cs" />
+    <Compile Include="Audio\OnsetDetection\FFT.cs" />
+    <Compile Include="Audio\OnsetDetection\LomontFFT.cs" />
+    <Compile Include="Audio\OnsetDetection\OnsetDetection.cs" />
+    <Compile Include="Audio\SoundTouch\SoundTouch.cs" />
+    <Compile Include="Audio\SoundTouch\SoundTouchSource.cs" />
     <Compile Include="Effects\DetailsEffect.cs" />
     <Compile Include="Effects\EffectChain.cs" />
     <Compile Include="Effects\EffectStage.cs" />
@@ -135,6 +139,7 @@
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Loader.cs" />
     <Compile Include="Renderer\Model.cs" />
+    <Compile Include="Renderer\Shaders\FlatShader.cs" />
     <Compile Include="Renderer\Shaders\ImageShader.cs" />
     <Compile Include="Renderer\Shaders\Shader.cs" />
     <Compile Include="Renderer\Texture.cs" />
@@ -143,6 +148,12 @@
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="Resources\Shaders\flat.f.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Shaders\flat.v.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Shaders\image.v.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -186,5 +197,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

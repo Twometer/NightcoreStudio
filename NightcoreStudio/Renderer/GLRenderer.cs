@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 using SDPixelFormat = System.Drawing.Imaging.PixelFormat;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using System.Drawing.Imaging;
-using AutoNightcore.Renderer.Shaders;
+using NightcoreStudio.Renderer.Shaders;
 
-namespace AutoNightcore.Renderer
+namespace NightcoreStudio.Renderer
 {
     public class GLRenderer : IDisposable, IRenderer
     {
         private GameWindow window;
 
-        public ImageShader BasicShader { get; private set; }
+        public ImageShader ImageShader { get; private set; }
+        public FlatShader FlatShader { get; private set; }
 
         public Matrix4 ProjectionMatrix = Matrix4.Identity;
 
@@ -34,7 +35,8 @@ namespace AutoNightcore.Renderer
             win.MakeCurrent();
             window = win;
 
-            BasicShader = new ImageShader();
+            ImageShader = new ImageShader();
+            FlatShader = new FlatShader();
 
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Color.Purple);
@@ -83,16 +85,16 @@ namespace AutoNightcore.Renderer
 
         public void DrawImage(Texture image, int x, int y, int width, int height)
         {
-            BasicShader.Bind();
+            ImageShader.Bind();
             image.Bind();
 
-            BasicShader.ProjectionMatrix = ProjectionMatrix;
-            BasicShader.ModelMatrix = Matrix4.CreateScale(width, height, 1.0f) * Matrix4.CreateTranslation(x, y, 0);
+            ImageShader.ProjectionMatrix = ProjectionMatrix;
+            ImageShader.ModelMatrix = Matrix4.CreateScale(width, height, 1.0f) * Matrix4.CreateTranslation(x, y, 0);
 
             rectModel.Draw();
 
             image.Unbind();
-            BasicShader.Unbind();
+            ImageShader.Unbind();
         }
 
 
@@ -103,13 +105,19 @@ namespace AutoNightcore.Renderer
 
         public void DrawRect(Rectangle rectangle, Color color)
         {
+            FlatShader.Bind();
+            FlatShader.ProjectionMatrix = ProjectionMatrix;
+            FlatShader.ModelMatrix = Matrix4.CreateScale(rectangle.Width, rectangle.Height, 1.0f) * Matrix4.CreateTranslation(rectangle.X, rectangle.Y, 0);
+            FlatShader.Color = new Color4(color.R, color.G, color.B, color.A);
 
+            rectModel.Draw();
+            FlatShader.Unbind();
         }
 
         public Bitmap Snapshot()
         {
             GL.Flush();
-            
+
             var frame = new Bitmap(1920, 1080, SDPixelFormat.Format32bppRgb);
             var mem = frame.LockBits(new Rectangle(0, 0, 1920, 1080), ImageLockMode.WriteOnly, SDPixelFormat.Format32bppRgb);
             GL.PixelStore(PixelStoreParameter.PackRowLength, mem.Stride / 4);

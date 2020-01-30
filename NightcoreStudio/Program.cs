@@ -1,4 +1,5 @@
-﻿using AutoNightcore.Generator;
+﻿using NightcoreStudio.Effects;
+using NightcoreStudio.Generator;
 using CSVideo;
 using McMaster.Extensions.CommandLineUtils;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoNightcore
+namespace NightcoreStudio
 {
     [HelpOption]
     class Program
@@ -85,6 +86,8 @@ namespace AutoNightcore
             Console.WriteLine("Generating Nightcore video...");
             var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, Factor / 100.0f);
             var generator = new NightcoreGenerator(options);
+
+           // generator.AddEffect(new ShakeEffect());
 
             generator.ProgressHandler = progress =>
             {

@@ -1,5 +1,5 @@
-﻿using AutoNightcore.Generator;
-using AutoNightcore.Renderer;
+﻿using NightcoreStudio.Generator;
+using NightcoreStudio.Renderer;
 using CSCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoNightcore.Effects
+namespace NightcoreStudio.Effects
 {
     public interface IEffect
     {
