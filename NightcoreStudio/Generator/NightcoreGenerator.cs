@@ -59,7 +59,7 @@ namespace AutoNightcore.Generator
 
                 var length = source.GetLength().TotalSeconds;
 
-                var totalFrames = length * options.Fps;
+                var totalFrames = length * options.Fps * (1.0f - options.Factor);
 
                 Console.WriteLine($"Stats:\n Total Seconds: {length}\n Fps: {options.Fps}");
 
