@@ -41,6 +41,9 @@ namespace NightcoreStudio.Renderer
             GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Color.Purple);
 
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
             ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0f, 1920f, 1080f, 0f, 0.0f, 1.0f);
 
             var rectVert = new float[]

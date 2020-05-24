@@ -87,7 +87,7 @@ namespace NightcoreStudio
             var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, Factor / 100.0f);
             var generator = new NightcoreGenerator(options);
 
-           // generator.AddEffect(new ShakeEffect());
+            generator.AddEffect(new BeatPulseEffect());
 
             generator.ProgressHandler = progress =>
             {

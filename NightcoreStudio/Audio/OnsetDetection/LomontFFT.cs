@@ -14,6 +14,14 @@ using System.Threading.Tasks;
 // Largely untouched - Anthony Lee  
 namespace NightcoreStudio.Audio.OnsetDetection
 {
+    /// <summary>                                                                                                
+    /// Represent a class that performs real or complex valued Fast Fourier                                      
+    /// Transforms. Instantiate it and use the FFT or TableFFT methods to                                        
+    /// compute complex to complex FFTs. Use FFTReal for real to complex                                         
+    /// FFTs which are much faster than standard complex to complex FFTs.                                        
+    /// Properties A and B allow selecting various FFT sign and scaling                                          
+    /// conventions.                                                                                             
+    /// </summary>                                                                                               
     public class LomontFFT
     {
         /// <summary>                                                                                            

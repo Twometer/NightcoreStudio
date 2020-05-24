@@ -20,7 +20,6 @@ namespace NightcoreStudio.Effects
 
         public void Initialize(ISampleSource soundSource)
         {
-            throw new NotImplementedException();
         }
     }
 }

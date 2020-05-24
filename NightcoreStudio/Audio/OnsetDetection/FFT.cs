@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NightcoreStudio.Audio.OnsetDetection
 {
-    public class FFT : LomontFFT
+    class FFT : LomontFFT
     {
         float[] real;
         float[] imag;

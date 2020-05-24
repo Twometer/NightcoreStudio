@@ -69,10 +69,9 @@ namespace NightcoreStudio.Generator
                     var image = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
                     wallpaperTexture = renderer.LoadTexture(image);
 
-                    effectChain.Initialize(source);
+                    effectChain.Initialize(source.ToMono());
 
                     Console.WriteLine("Generating video...");
-                    Thread.Sleep(1000);
 
                     float[] audioData = new float[writer.AudioSamplesPerFrame];
 

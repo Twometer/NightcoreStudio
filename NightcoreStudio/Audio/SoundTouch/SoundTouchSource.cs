@@ -92,6 +92,7 @@ namespace SoundTouchPitchAndTempo
                         {
                             endOfSource = true;
                             _soundTouch.Flush();
+                            return 0;
                         }
 
                         _soundTouch.PutSamples(_sourceReadBuffer, readFromSource / _sampleSource.WaveFormat.Channels);
@@ -126,6 +127,8 @@ namespace SoundTouchPitchAndTempo
         protected virtual new void Dispose(bool isDisposing)
         {
             base.Dispose(isDisposing);
+
+            Console.WriteLine("Disposing");
 
             if (_isDisposed)
             {

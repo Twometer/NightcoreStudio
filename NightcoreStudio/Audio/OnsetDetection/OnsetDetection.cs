@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Code by Teh-Lemon
+
 namespace NightcoreStudio.Audio.OnsetDetection
 {
-    public class OnsetDetection
+    class OnsetDetection
     {
         FFT fft = new FFT();
-        ISampleSource src;
+        int SampleRate;
         int SampleSize;
+
 
         public float[] Onsets { get; set; }
         float[] LowOnsets { get; set; }
@@ -27,9 +30,9 @@ namespace NightcoreStudio.Audio.OnsetDetection
 
 
         // Constructor
-        public OnsetDetection(ISampleSource src, int sampleWindow)
+        public OnsetDetection(int sampleRate, int sampleWindow)
         {
-            this.src = src;
+            SampleRate = sampleRate;
             SampleSize = sampleWindow;
 
             spectrum = new float[sampleWindow / 2 + 1];
@@ -165,7 +168,7 @@ namespace NightcoreStudio.Audio.OnsetDetection
             const float indistinguishableRange = 0.01f; // 10ms
             // Number of set of samples to ignore after an onset
             int immunityPeriod = (int)((float)sampleCount
-                / (float)src.WaveFormat.SampleRate
+                / (float)SampleRate
                 / indistinguishableRange);
 
             // Results
@@ -219,7 +222,7 @@ namespace NightcoreStudio.Audio.OnsetDetection
             List<float> thresholdAverage = new List<float>();
 
             // How many spectral fluxes to look at, at a time (approximation is fine)
-            float sourceTimeSpan = (float)(sampleWindow) / (float)(src.WaveFormat.SampleRate);
+            float sourceTimeSpan = (float)(sampleWindow) / (float)(SampleRate);
             int windowSize = (int)(thresholdTimeSpan / sourceTimeSpan / 2);
 
             for (int i = 0; i < data.Count; i++)
@@ -250,8 +253,10 @@ namespace NightcoreStudio.Audio.OnsetDetection
         public float TimePerSample()
         {
             // Length of time per sample
-            return (float)SampleSize / (float)src.WaveFormat.SampleRate;
+            return (float)SampleSize / (float)SampleRate;
         }
+
         #endregion
+
     }
 }
