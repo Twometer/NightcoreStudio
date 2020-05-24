@@ -88,6 +88,7 @@ namespace NightcoreStudio
             var generator = new NightcoreGenerator(options);
 
             generator.AddEffect(new BeatPulseEffect());
+            generator.AddEffect(new DetailsEffect());
 
             generator.ProgressHandler = progress =>
             {
