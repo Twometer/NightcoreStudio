@@ -18,7 +18,7 @@ namespace NightcoreStudio.Effects
             throw new NotImplementedException();
         }
 
-        public void Initialize(ISampleSource soundSource)
+        public void Initialize(ISampleSource soundSource, GeneratorOptions options)
         {
             throw new NotImplementedException();
         }

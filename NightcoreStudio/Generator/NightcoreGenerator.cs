@@ -42,7 +42,7 @@ namespace NightcoreStudio.Generator
             var audioSource = CodecFactory.Instance.GetCodec(options.AudioFile.FullName)
                 .ToSampleSource()
                 .AppendSource(s => new SoundTouchSource(s, 50), out var touchSource);
-            touchSource.SetRate(1.0f + options.Factor);
+            touchSource.SetRate(options.Factor);
 
             GenerateVideo(audioSource);
 
@@ -60,48 +60,46 @@ namespace NightcoreStudio.Generator
                 writer.AudioSampleRate = source.WaveFormat.SampleRate;
                 writer.Open();
 
-                var totalFrames = source.GetLength().TotalSeconds * options.Fps * (1.0f - options.Factor);
+                double totalFrames = FrameMath.CalculateTotalFrames(source, options);
 
                 using (var renderer = new GLRenderer())
                 {
                     Console.WriteLine("Initializing renderer...");
                     renderer.Create();
-                    var image = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
-                    wallpaperTexture = renderer.LoadTexture(image);
-
-                    effectChain.Initialize(source.ToMono());
+                    var wallpaper = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
+                    wallpaperTexture = renderer.LoadTexture(wallpaper);
+                    effectChain.Initialize(source.ToMono(), options);
 
                     Console.WriteLine("Generating video...");
+                    float[] sampleBuffer = new float[writer.AudioSamplesPerFrame];
 
-                    float[] audioData = new float[writer.AudioSamplesPerFrame];
-
-                    var f = 0;
+                    var frameNumber = 0;
                     while (true)
                     {
                         if (writer.WriteVideo)
                         {
                             renderer.Clear();
-                            RenderFrame(renderer, new Frame(f, TimeSpan.FromSeconds(f / (double)options.Fps)));
+                            RenderFrame(renderer, new Frame(frameNumber, TimeSpan.FromSeconds(frameNumber / (double)options.Fps)));
 
                             var frame = renderer.Snapshot();
                             writer.WriteVideoFrame(frame);
-                            frame.Dispose();
 
-                            if (f % 60 == 0)
+                            if (frameNumber % 60 == 0)
                             {
-                                ProgressHandler?.Invoke(Math.Round(f / totalFrames * 100.0, 2));
+                                ProgressHandler?.Invoke(Math.Round(frameNumber / totalFrames * 100.0, 2));
                             }
 
-                            f++;
+                            frameNumber++;
                         }
                         else
                         {
-                            var read = source.Read(audioData, 0, audioData.Length);
+                            var read = source.Read(sampleBuffer, 0, sampleBuffer.Length);
                             if (read > 0)
-                                writer.WriteAudioFrame(audioData);
+                                writer.WriteAudioFrame(sampleBuffer);
                             else break;
                         }
                     }
+                    ProgressHandler?.Invoke(Math.Round(frameNumber / totalFrames * 100.0, 2));
                 }
             }
         }

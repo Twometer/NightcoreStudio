@@ -13,7 +13,7 @@ namespace NightcoreStudio.Effects
     {
         EffectStage Stage { get; }
 
-        void Initialize(ISampleSource soundSource);
+        void Initialize(ISampleSource soundSource, GeneratorOptions options);
 
         void Apply(IRenderer renderer, Frame frame);
     }

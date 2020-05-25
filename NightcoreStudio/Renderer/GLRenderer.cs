@@ -26,6 +26,8 @@ namespace NightcoreStudio.Renderer
 
         private Model rectModel;
 
+        private Bitmap frame = new Bitmap(1920, 1080, SDPixelFormat.Format32bppRgb);
+
         public void Create()
         {
             var mode = new GraphicsMode(new ColorFormat(32), 24, 0, 0, ColorFormat.Empty, 1);
@@ -121,7 +123,6 @@ namespace NightcoreStudio.Renderer
         {
             GL.Flush();
 
-            var frame = new Bitmap(1920, 1080, SDPixelFormat.Format32bppRgb);
             var mem = frame.LockBits(new Rectangle(0, 0, 1920, 1080), ImageLockMode.WriteOnly, SDPixelFormat.Format32bppRgb);
             GL.PixelStore(PixelStoreParameter.PackRowLength, mem.Stride / 4);
             GL.ReadPixels(0, 0, 1920, 1080, PixelFormat.Bgra, PixelType.UnsignedByte, mem.Scan0);

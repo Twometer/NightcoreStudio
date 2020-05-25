@@ -132,6 +132,7 @@
     <Compile Include="Effects\ParticleEffects.cs" />
     <Compile Include="Effects\BeatPulseEffect.cs" />
     <Compile Include="Generator\Frame.cs" />
+    <Compile Include="Generator\FrameMath.cs" />
     <Compile Include="Generator\GeneratorOptions.cs" />
     <Compile Include="Generator\NightcoreGenerator.cs" />
     <Compile Include="Program.cs" />

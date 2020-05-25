@@ -18,10 +18,10 @@ namespace NightcoreStudio.Effects
             effects.Add(effect);
         }
 
-        public void Initialize(ISampleSource source)
+        public void Initialize(ISampleSource source, GeneratorOptions options)
         {
             foreach (var eff in effects)
-                eff.Initialize(source);
+                eff.Initialize(source, options);
         }
 
         public void Apply(IRenderer renderer, Frame frame, EffectStage stage)

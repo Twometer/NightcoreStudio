@@ -17,13 +17,17 @@ namespace NightcoreStudio.Effects
 
         public EffectStage Stage => EffectStage.PostProcess;
 
-        public void Initialize(ISampleSource soundSource)
+        private int fps;
+
+        public void Initialize(ISampleSource soundSource, GeneratorOptions options)
         {
             analysis = new AudioAnalysis();
             analysis.PCMStream = soundSource;
             analysis.DetectOnsets();
             analysis.NormalizeOnsets(0);
             analysis.PCMStream.Position = 0;
+
+            fps = options.Fps;
 
             Console.WriteLine("Audio analyzer detected " + analysis.GetOnsets().Count(f => f > 0) + " onsets!");
         }
@@ -32,15 +36,19 @@ namespace NightcoreStudio.Effects
         {
             var frameTime = frame.Time.TotalSeconds;
             var num = 0;
+            var maxTimespan = (1.0d / fps) * 3;
             foreach (var onset in analysis.GetOnsets())
             {
-                if (onset > 0.05)
+                if (onset > 0.04)
                 {
+
                     float timePos = num * analysis.GetTimePerSample();
                     var timeDiff = Math.Abs(frameTime - timePos);
-                    if (timeDiff <= 0.05)
+                    if (timeDiff <= maxTimespan)
                     {
-                        renderer.DrawRect(new Rectangle(0, 0, 1920, 1080), Color.FromArgb(75, 255, 255, 255));
+                        var onsetMultiplier = Math.Min(1.0, onset + 0.5);
+                        var timeProgress = timeDiff / maxTimespan;
+                        renderer.DrawRect(new Rectangle(0, 0, 1920, 1080), Color.FromArgb((int)(50 * timeProgress * onsetMultiplier), 255, 255, 255));
                         return;
                     }
                 }
