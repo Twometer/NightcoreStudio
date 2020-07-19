@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NightcoreStudio.Effects
+namespace NightcoreStudio.Effects.Base
 {
     public enum EffectStage
     {

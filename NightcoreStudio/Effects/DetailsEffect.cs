@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using CSCore;
 using NightcoreStudio.Generator;
 using NightcoreStudio.Renderer;
-using CSCore;
-using System.Drawing;
+using NightcoreStudio.Effects.Base;
 
 namespace NightcoreStudio.Effects
 {

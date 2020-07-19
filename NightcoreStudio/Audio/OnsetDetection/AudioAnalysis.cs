@@ -143,7 +143,7 @@ namespace NightcoreStudio.Audio.OnsetDetection
         {
             onsetDetection = new OnsetDetection(PCMStream.WaveFormat.SampleRate, 1024);
             // Has finished reading in the audio file
-            bool finished = false;
+            
             // Set the pcm data back to the beginning
             SetTrackPosition(0);
 

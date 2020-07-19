@@ -1,18 +1,11 @@
-﻿using NightcoreStudio.Effects;
-using NightcoreStudio.Renderer;
+﻿using System;
+using System.Drawing;
 using CSCore;
 using CSCore.Codecs;
-using CSCore.Codecs.WAV;
-using CSCore.MediaFoundation;
 using CSVideo.Writer;
 using SoundTouchPitchAndTempo;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using NightcoreStudio.Renderer;
+using NightcoreStudio.Effects.Base;
 
 namespace NightcoreStudio.Generator
 {

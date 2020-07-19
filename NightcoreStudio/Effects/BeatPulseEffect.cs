@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using CSCore;
 using NightcoreStudio.Generator;
 using NightcoreStudio.Renderer;
-using CSCore;
 using NightcoreStudio.Audio.OnsetDetection;
-using System.Drawing;
+using NightcoreStudio.Effects.Base;
 
 namespace NightcoreStudio.Effects
 {
@@ -48,7 +46,7 @@ namespace NightcoreStudio.Effects
                     {
                         var onsetMultiplier = Math.Min(1.0, onset + 0.5);
                         var timeProgress = timeDiff / maxTimespan;
-                        renderer.DrawRect(new Rectangle(0, 0, 1920, 1080), Color.FromArgb((int)(50 * timeProgress * onsetMultiplier), 255, 255, 255));
+                        renderer.DrawRect(new Rectangle(0, 0, 1920, 1080), Color.FromArgb((int)(35 * timeProgress * onsetMultiplier), 255, 255, 255));
                         return;
                     }
                 }

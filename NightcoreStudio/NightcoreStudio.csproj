@@ -125,10 +125,10 @@
     <Compile Include="Audio\SoundTouch\SoundTouch.cs" />
     <Compile Include="Audio\SoundTouch\SoundTouchSource.cs" />
     <Compile Include="Effects\DetailsEffect.cs" />
-    <Compile Include="Effects\EffectChain.cs" />
-    <Compile Include="Effects\EffectStage.cs" />
+    <Compile Include="Effects\Base\EffectChain.cs" />
+    <Compile Include="Effects\Base\EffectStage.cs" />
     <Compile Include="Effects\FadeEffect.cs" />
-    <Compile Include="Effects\IEffect.cs" />
+    <Compile Include="Effects\Base\IEffect.cs" />
     <Compile Include="Effects\ParticleEffects.cs" />
     <Compile Include="Effects\BeatPulseEffect.cs" />
     <Compile Include="Generator\Frame.cs" />
