@@ -40,6 +40,9 @@ namespace NightcoreStudio
         [Option(Description = "Speed increase (percent)", ShortName = "s")]
         public int SpeedIncrease { get; } = 25;
 
+        [Option(Description = "Show renderer during export", ShortName = "V")]
+        public bool RendererVisible { get; } = false;
+
         private void OnExecute()
         {
             if (!File.Exists(AudioFile))
@@ -84,12 +87,13 @@ namespace NightcoreStudio
             Console.WriteLine($"Loaded ffmpeg v{FFmpegLoader.FFmpegVersion}");
 
             Console.WriteLine("Generating Nightcore video...");
-            var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, 1.0f + SpeedIncrease / 100.0f);
+            var options = new GeneratorOptions(new FileInfo(AudioFile), new FileInfo(WallpaperFile), new FileInfo(OutputFile), LyricsFile != null ? new FileInfo(LyricsFile) : null, FontFamily, GenerateIntro, FPS, 1.0f + SpeedIncrease / 100.0f, RendererVisible);
             var generator = new NightcoreGenerator(options);
 
-            generator.AddEffect(new BeatPulseEffect());
+            generator.AddEffect(new BeatPulseEffect(0.1, 4));
             generator.AddEffect(new DetailsEffect());
             generator.AddEffect(new FadeEffect(3));
+            generator.AddEffect(new ParticleEffect(20));
 
             generator.ProgressHandler = progress =>
             {

@@ -15,7 +15,16 @@ namespace NightcoreStudio.Effects
 
         public EffectStage Stage => EffectStage.PostProcess;
 
+        private double intensity;
+        private int maxFrames;
+
         private int fps;
+
+        public BeatPulseEffect(double intensity, int maxFrames = 3)
+        {
+            this.intensity = intensity;
+            this.maxFrames = maxFrames;
+        }
 
         public void Initialize(ISampleSource soundSource, GeneratorOptions options)
         {
@@ -34,7 +43,7 @@ namespace NightcoreStudio.Effects
         {
             var frameTime = frame.Time.TotalSeconds;
             var num = 0;
-            var maxTimespan = (1.0d / fps) * 3;
+            var maxTimespan = (1.0d / fps) * maxFrames;
             foreach (var onset in analysis.GetOnsets())
             {
                 if (onset > 0.04)
@@ -46,7 +55,7 @@ namespace NightcoreStudio.Effects
                     {
                         var onsetMultiplier = Math.Min(1.0, onset + 0.5);
                         var timeProgress = timeDiff / maxTimespan;
-                        renderer.DrawRect(new Rectangle(0, 0, 1920, 1080), Color.FromArgb((int)(35 * timeProgress * onsetMultiplier), 255, 255, 255));
+                        renderer.DrawRect(new Rectangle(0, 0, 1920, 1080), Color.FromArgb((int)(255.0f * intensity * timeProgress * onsetMultiplier), 255, 255, 255));
                         return;
                     }
                 }

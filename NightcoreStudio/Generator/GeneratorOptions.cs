@@ -27,7 +27,9 @@ namespace NightcoreStudio.Generator
 
         public float Factor { get; }
 
-        public GeneratorOptions(FileInfo audioFile, FileInfo wallpaperFile, FileInfo outputFile, FileInfo lyricsFile, string fontFamily, bool generateIntro, int fps, float factor)
+        public bool RendererVisible { get; }
+
+        public GeneratorOptions(FileInfo audioFile, FileInfo wallpaperFile, FileInfo outputFile, FileInfo lyricsFile, string fontFamily, bool generateIntro, int fps, float factor, bool rendererVisible)
         {
             AudioFile = audioFile;
             WallpaperFile = wallpaperFile;
@@ -37,6 +39,7 @@ namespace NightcoreStudio.Generator
             GenerateIntro = generateIntro;
             Fps = fps;
             Factor = factor;
+            RendererVisible = rendererVisible;
         }
     }
 }

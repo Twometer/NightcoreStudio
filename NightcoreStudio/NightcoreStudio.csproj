@@ -129,7 +129,7 @@
     <Compile Include="Effects\Base\EffectStage.cs" />
     <Compile Include="Effects\FadeEffect.cs" />
     <Compile Include="Effects\Base\IEffect.cs" />
-    <Compile Include="Effects\ParticleEffects.cs" />
+    <Compile Include="Effects\ParticleEffect.cs" />
     <Compile Include="Effects\BeatPulseEffect.cs" />
     <Compile Include="Generator\Frame.cs" />
     <Compile Include="Generator\FrameMath.cs" />
@@ -141,6 +141,7 @@
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Loader.cs" />
     <Compile Include="Renderer\Model.cs" />
+    <Compile Include="Renderer\Models.cs" />
     <Compile Include="Renderer\Shaders\FlatShader.cs" />
     <Compile Include="Renderer\Shaders\ImageShader.cs" />
     <Compile Include="Renderer\Shaders\Shader.cs" />

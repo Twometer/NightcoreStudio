@@ -17,6 +17,8 @@ namespace NightcoreStudio.Renderer
 
         void DrawString(string text, int x, int y, int size);
 
+        void DrawCircle(int x, int y, int size, Color color);
+
         void DrawRect(Rectangle rectangle, Color color);
 
         Bitmap Snapshot();

@@ -58,7 +58,7 @@ namespace NightcoreStudio.Generator
                 using (var renderer = new GLRenderer())
                 {
                     Console.WriteLine("Initializing renderer...");
-                    renderer.Create();
+                    renderer.Create(options.RendererVisible);
                     var wallpaper = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
                     wallpaperTexture = renderer.LoadTexture(wallpaper);
                     effectChain.Initialize(source.ToMono(), options);
