@@ -14,7 +14,8 @@ namespace NightcoreStudio.Effects
 
         public void Apply(IRenderer renderer, Frame frame)
         {
-            renderer.DrawString("Hello!", 15, 15, 1);
+            renderer.DrawString("Castle", 15, 15, 42);
+            renderer.DrawString("Halsey", 15, 70, 32);
 
             var progress = frame.Number / (double)totalFrames;
             renderer.DrawRect(new Rectangle(0, 1080 - 10, (int)(1920 * progress), 10), Color.White);
@@ -26,3 +27,4 @@ namespace NightcoreStudio.Effects
         }
     }
 }
+

@@ -55,10 +55,9 @@ namespace NightcoreStudio.Generator
 
                 double totalFrames = FrameMath.CalculateTotalFrames(source, options);
 
-                using (var renderer = new GLRenderer())
+                Console.WriteLine("Initializing renderer...");
+                using (var renderer = new GLRenderer(false))
                 {
-                    Console.WriteLine("Initializing renderer...");
-                    renderer.Create(options.RendererVisible);
                     var wallpaper = Image.FromFile(options.WallpaperFile.FullName) as Bitmap;
                     wallpaperTexture = renderer.LoadTexture(wallpaper);
                     effectChain.Initialize(source.ToMono(), options);

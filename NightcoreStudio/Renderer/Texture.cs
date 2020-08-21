@@ -9,17 +9,17 @@ namespace NightcoreStudio.Renderer
 {
     public class Texture
     {
-        private int id;
+        public int Id { get; }
 
         public Texture(int id)
         {
-            this.id = id;
+            Id = id;
         }
 
         public void Bind()
         {
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, id);
+            GL.BindTexture(TextureTarget.Texture2D, Id);
         }
 
         public void Unbind()

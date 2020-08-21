@@ -22,7 +22,7 @@ namespace NightcoreStudio.Renderer
 
         private Bitmap frame = new Bitmap(1920, 1080, SDPixelFormat.Format32bppRgb);
 
-        public void Create(bool rendererVisible)
+        public GLRenderer(bool rendererVisible)
         {
             var mode = new GraphicsMode(new ColorFormat(32), 24, 0, 0, ColorFormat.Empty, 1);
             var win = new GameWindow(1920, 1080, mode, "NightcoreStudio Renderer", GameWindowFlags.FixedWindow, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default);

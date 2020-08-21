@@ -138,6 +138,7 @@
     <Compile Include="Generator\NightcoreGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\GdiRenderer.cs" />
     <Compile Include="Renderer\GLRenderer.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Loader.cs" />
